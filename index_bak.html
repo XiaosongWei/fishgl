@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>FishGL</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="description" content="3D fish at your fingertips. An interactive WebGL performance demo from IE11.">
+        <link rel="canonical" href="http://www.fishgl.com/">
+
+        <meta property="og:image" content="http://www.fishgl.com/images/tile-large.jpg"/>
+        <meta property="og:title" content="FishGL by Internet Explorer"/>
+        <meta property="og:site_name" content="FishGL by Internet Explorer"/>      
+        <meta property="og:url" content="http://www.fishgl.com/"/>
+        <meta property="og:description" content="3D fish at your fingertips. An interactive WebGL performance demo from IE11."/>
+
+		<meta name="application-name" content="FishGL" />
+		<meta name="msapplication-TileColor" content="#39BFE5"/>
+		<meta name="msapplication-TileImage" content="images/tile-small.png"/>
+		<meta name="msapplication-square70x70logo" content="images/tile-small.png" />
+		<meta name="msapplication-square150x150logo" content="images/tile-medium.png" />
+		<meta name="msapplication-wide310x150logo" content="images/tile-wide.jpg" />
+		<meta name="msapplication-square310x310logo" content="images/tile-large.jpg" />
+
+		<link rel="icon" href="images/favicon-32.png" sizes="32x32">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/tile-ios.png">
+        <link href="css/app.css" rel="stylesheet" type="text/css">
+        <link href="css/ieflyout.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+    	<div id="renderInfo" style="color:white"></div>
+        <div id="renderDiv"></div>
+        <div id="controls" class="open">
+            <div id="controls-bg"></div>
+	        <div id="controls-logo"></div>
+	        <div id="controls-pagedots"></div>
+	        <div id="controls-pages-clip">
+				<div id="controls-pages">
+			        <div class="controls-page">
+				        <div id="controls-stats-container">
+				            <div id="controls-stats">
+					            <div id="controls-stats-bg"></div>
+				                <canvas id="controls-stats-canvas"></canvas>
+				                <div id="controls-stats-text">
+				                    <span id="controls-stats-fish" class="controls-stats-span"></span>
+				                    <span id="controls-stats-fps" class="controls-stats-span" ></span>
+				                    <span id="controls-stats-fpslabel" class="controls-stats-span" >FPS</span>
+				                </div>
+				            </div>
+				            <div id="controls-knob-container">
+				                <input id="controls-knob" type="text" class="knob">
+				                <div id="controls-knob-grabber">
+				                    <div id="controls-knob-hint"></div>
+				                </div>
+				            </div>
+						</div>
+                        <div class="controls-first-halfrow">
+							<div id="controls-lights" data-label="Lights" class="controls-toggle"></div>
+						</div>
+						<div class="controls-last-halfrow">
+							<div id="controls-bubbles" data-label="Bubbles" class="controls-toggle"></div>
+						</div>
+                        <div class="controls-row">
+						    <div id="controls-cleaning" class="controls-slider"></div>
+						</div>
+						<div class="controls-row">
+							<div id="controls-view">
+								<div id="controls-view-normal" class="toggle-option" data-toggle-value="outsidein" data-toggle-label="Outside In"></div>
+								<div id="controls-view-diver" class="toggle-option" data-toggle-value="insideout" data-toggle-label="Inside Out"></div>
+							</div>
+						</div>
+						<div id="controls-row-social" class="controls-row">
+    							<div id="controls-twitter"></div>
+							<div id="controls-facebook"></div>
+							<a id="controls-about" href="http://www.modern.ie/en-us/rethink/fishgl" target="_blank">About</a>
+    						</div>
+		        		</div>
+		        		<div id="controls-advanced" class="controls-page">
+			        		<div id="controls-advanced-panelscroller">
+			        			<div id="controls-advanced-panel"></div>
+			        		</div>
+			        		<div id="controls-advanced-scrollthumb"></div>
+		        		</div>
+				</div>
+			</div>
+            <div id="controls-close"></div>
+        </div>
+        
+        <div id="controls-menu">
+            <div id="controls-menu-fps">60</div>
+        </div>
+
+        <a id="fwaLink" href="http://www.thefwa.com/" alt="FWA Site of the Day"></a>
+        
+        <div id="loading">
+            <div id="loading-center">
+                <div id="loading-logo"></div>
+                <div id="loading-hex">
+                    <canvas id="loading-waves"></canvas>
+                    <div id="loading-water"></div>
+                    <div id="loading-bubbles"></div>
+                    <div id="loading-hex-over"></div>
+                </div>
+                <h2 id="loading-percent">0%</h2>
+            </div>
+            <div id="loading-highlight"></div>
+        </div>
+
+        <div id="upgradeContent">
+            <div id="upgradeMessage">
+                <img id="upgradeHeader" src="images/upgrade.jpg">
+                <div id="upgradeWin8" class="upgradeMessageContent">
+                    <h2 class="upgradeMessage">
+                        You’ll need Internet Explorer 11 with WebGL to experience the fish tank! Get it for free when you upgrade to Windows 8.1.
+                    </h2>
+                    <a id="upgradeWin8Button" target="_blank" href="http://windows.microsoft.com/en-us/windows-8/meet">Upgrade for Free</a>
+                </div>
+
+                <div id="upgradeWin7" class="upgradeMessageContent">
+                    <h2 class="upgradeMessage">
+                        You’ll need Internet Explorer 11 with WebGL to experience the fish tank.
+                    </h2>
+                    <a id="upgradeWin7Button" target="_blank" href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-release-preview">Download for Free</a>
+                </div>
+
+                <div id="upgradeWinPrev" class="upgradeMessageContent">
+                    <h2 class="upgradeMessage">
+                        The fish tank requires WebGL. Upgrade to Windows 8.1 with Internet Explorer 11 now with WebGL.     
+                    </h2>
+                    <a id="upgradeWinPrevButton" target="_blank" href="http://windows.microsoft.com/en-us/windows-8/meet">Learn More</a>
+                </div>
+
+                <div id="upgradeMobile" class="upgradeMessageContent">
+                    <h2 class="upgradeMessage">http://windows.microsoft.com/en-us/windows-8/meet
+                        The fish tank only works on browsers with WebGL support like Internet Explorer 11!
+                    </h2>
+                    <a id="upgradeNonWinButton" target="_blank" href="http://windows.microsoft.com/en-us/windows-8/meet">Learn More</a>
+                </div>
+
+                <div id="upgradeNonWin" class="upgradeMessageContent">
+                    <h2 class="upgradeMessage">
+                        <span id="upgradeWebGLDisabled">Looks like your browser supports 3D graphics, but WebGL is not enabled.</span>
+                        <span id="upgradeWebGLUnsupported">You’ll need a browser that supports WebGL to experience the fish tank.</span>
+                        Windows 8.1 comes with Internet Explorer 11, now with WebGL!
+                    </h2>
+                    <a id="upgradeNonWinButton" target="_blank" href="http://windows.microsoft.com/en-us/windows-8/meet">Learn More</a>
+                </div>
+
+            </div>
+        </div>
+  		
+		<script>
+
+(function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+    }
+    ,
+    i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+ga('create', 'UA-49578811-1', 'fishgl.com');
+ga('send', 'pageview');
+</script>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js">
+</script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r66/three.min.js">
+</script>
+        <script src="scripts/libs.js">
+</script>
+        <script src="http://rethinkbar.azurewebsites.net/fishgl/ieflyout.js">
+</script>
+        <script>
+var ieFishbowl = {
+    threeVersion: 66
+};
+</script>
+        <script src="scripts/app.js">
+</script>
+    </body>
+</html>
+        
